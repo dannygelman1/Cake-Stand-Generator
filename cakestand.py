@@ -22,6 +22,7 @@ def adjustHeight(sliderHeight, *args, **kwargs):
     quadcylinderNumber = numberObject('base')
     cmds.select(quadcylinderName, r=True)
     cmds.setAttr('polyCylinder' + quadcylinderNumber + '.height', valHeight, **kwargs) 
+    cmds.move(0,valHeight/2,0, quadcylinderName)
     
 def adjustRadius(sliderRadius, *args, **kwargs):
     """
@@ -109,7 +110,7 @@ def base():
     subcap = cmds.intSliderGrp(CapSlider, q=True, value=True)
     
     baseCyl = quadCylinder('base', radius, height, subax, subheight, subcap)
-    cmds.move(0,-height/2.0,0, "base1.scalePivot","base1.rotatePivot", absolute=True)
+    #cmds.move(0,-height/2.0,0, "base1.scalePivot","base1.rotatePivot", absolute=True)
     cmds.move(0,height/2,0,'base1')
     
 def quadCylinder(name, radius, height, subax, subheight, subcap):
