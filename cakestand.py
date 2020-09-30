@@ -22,14 +22,21 @@ def adjustHeight(sliderHeight, sliderNumPlates, sliderDistance, *args, **kwargs)
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
     quadcylinderName = nameObject('base')
     quadcylinderNumber = int(numberObject('base'))
-    plateName = nameObject('plates')
-    plateNumber = int(numberObject('plates'))
+    
+    numBase = int(numberObject('base'))
+    extraP = ''
+    for i in range(0,numBase):
+        extraP+= 'p'
+    name = extraP + 'lates'
+    
+    plateName = nameObject(name)
+    plateNumber = int(numberObject(name))
     cmds.select(quadcylinderName, r=True)
     cmds.setAttr('polybase' + str(quadcylinderNumber)+ '.height', valHeight, **kwargs) 
     cmds.move(0,valHeight/2,0, quadcylinderName)
     for i in range(0, valNumPlates):
        print(i)
-       nameplate = 'plates'+ str((plateNumber - (valNumPlates-i))+1)
+       nameplate = name + str((plateNumber - (valNumPlates-i))+1)
        print(nameplate)
        cmds.move(0,valHeight+2*i+0.5+(valDistance*i),0,nameplate)
     
@@ -85,11 +92,18 @@ def adjustDistance(sliderDistance, sliderNumPlates, sliderHeight, *args, **kwarg
     valHeight = cmds.floatSliderGrp(sliderHeight, q=True, value=True)
     valDistance = cmds.floatSliderGrp(sliderDistance, q=True, value=True)
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
-    plateName = nameObject('plates')
-    plateNumber = int(numberObject('plates'))
+    
+    numBase = int(numberObject('base'))
+    extraP = ''
+    for i in range(0,numBase):
+        extraP+= 'p'
+    name = extraP + 'lates'
+    
+    plateName = nameObject(name)
+    plateNumber = int(numberObject(name))
     for i in range(1, valNumPlates):
        print(i)
-       nameplate = 'plates'+ str((plateNumber - (valNumPlates-i))+1)
+       nameplate = name + str((plateNumber - (valNumPlates-i))+1)
        print(nameplate)
        cmds.move(0,valHeight+2*i+0.5+(valDistance*i),0,nameplate)
        
@@ -203,7 +217,11 @@ def plates(heightBase, distance):
     subax = 5
     subheight = 2
     subcap = 4
-    name = 'plates'
+    numBase = int(numberObject('base'))
+    extraP = ''
+    for i in range(0,numBase):
+        extraP+= 'p'
+    name = extraP + 'lates'
     plateNumber = int(numberObject(name))
     if (plateNumber == 0):
         plateCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
