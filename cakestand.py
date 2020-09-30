@@ -10,7 +10,7 @@ cmds.text("Adjust Parameters of the Quad Cylinder")
 cmds.separator(h=20)
 
 #Stem Funcations
-def adjustHeight(sliderHeight, sliderNumPlates, *args, **kwargs):
+def adjustHeight(sliderHeight, sliderNumPlates, sliderDistance, *args, **kwargs):
     """
     sliderHeight: floatSliderGrp object holding the cylinder height value
         
@@ -18,6 +18,7 @@ def adjustHeight(sliderHeight, sliderNumPlates, *args, **kwargs):
     """
     
     valHeight = cmds.floatSliderGrp(sliderHeight, q=True, value=True)
+    valDistance = cmds.floatSliderGrp(sliderDistance, q=True, value=True)
     quadcylinderName = nameObject('base')
     quadcylinderNumber = int(numberObject('base'))
     plateName = nameObject('plate')
@@ -29,7 +30,7 @@ def adjustHeight(sliderHeight, sliderNumPlates, *args, **kwargs):
        print(i)
        nameplate = 'plates'+ str((plateNumber - (sliderNumPlates-i))+1)
        print(nameplate)
-       cmds.move(0,valHeight+2*i+0.5,0,nameplate)
+       cmds.move(0,valHeight+2*i+0.5+(valDistance*i),0,nameplate)
     
 def adjustRadius(sliderRadius, sliderNumPlates, *args, **kwargs):
     """
@@ -73,6 +74,22 @@ def adjustSubAx(sliderSubAx, *args, **kwargs):
     quadcylinderName = nameObject('base')
     cmds.delete(quadcylinderName)
     base() 
+
+def adjustDistance(sliderDistance, sliderNumPlates, sliderHeight, *args, **kwargs):
+    """
+    sliderHeight: floatSliderGrp object holding the cylinder height value
+        
+    Adjusts the cylinder height based on the slider value
+    """
+    valHeight = cmds.floatSliderGrp(sliderHeight, q=True, value=True)
+    valDistance = cmds.floatSliderGrp(sliderDistance, q=True, value=True)
+    plateName = nameObject('plate')
+    plateNumber = int(numberObject('plate'))
+    for i in range(1, sliderNumPlates):
+       print(i)
+       nameplate = 'plates'+ str((plateNumber - (sliderNumPlates-i))+1)
+       print(nameplate)
+       cmds.move(0,valHeight+2*i+0.5+(valDistance*i),0,nameplate)
       
 def nameObject(name):
     nameStar = name+'*'
@@ -89,7 +106,8 @@ def numberObject(name):
     
 
 HeightSlider = cmds.floatSliderGrp(label='Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
-cmds.floatSliderGrp(HeightSlider, e=True, dc = partial(adjustHeight, HeightSlider, 3))
+DistanceSlider = cmds.floatSliderGrp(label='Plate Distance', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
+cmds.floatSliderGrp(HeightSlider, e=True, dc = partial(adjustHeight, HeightSlider, 3, DistanceSlider))
 
 RadiusSlider = cmds.floatSliderGrp(label='Radius', columnAlign= (1,'right'), field=True, min=5, max=20, value=0, step=0.1, dc = 'empty')
 cmds.floatSliderGrp(RadiusSlider,  e=True, dc = partial(adjustRadius, RadiusSlider, 3))
@@ -103,6 +121,9 @@ cmds.intSliderGrp(CapSlider,  e=True, dc = partial(adjustCap, CapSlider))
 SubAxSlider = cmds.intSliderGrp(label='Subdivision Axis', columnAlign= (1,'right'), field=True, min=6, max=20, value=0, step=0.1, dc = 'empty')
 cmds.intSliderGrp(SubAxSlider,  e=True, dc = partial(adjustSubAx, SubAxSlider))
 
+#DistanceSlider = cmds.floatSliderGrp(label='Plate Distance', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
+cmds.floatSliderGrp(DistanceSlider,  e=True, dc = partial(adjustDistance, DistanceSlider, 3, HeightSlider))
+
 
 #Button
 cmds.button(l = 'Create Quad Cylinder',  c = 'cakestand()')
@@ -111,10 +132,11 @@ cmds.showWindow()
 
 def cakestand():
     height = cmds.floatSliderGrp(HeightSlider, q=True, value=True) 
+    distance = cmds.floatSliderGrp(DistanceSlider, q=True, value=True) 
     base()
-    plates(height)
+    plates(height, distance)
 
-def plates(heightBase):
+def plates(heightBase, distance):
     radius= 7
     height = 1
     subax = 5
@@ -124,12 +146,10 @@ def plates(heightBase):
     for i in range(0,3):
         plateCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
         plateName = nameObject(name)
-        cmds.move(0,heightBase+2*i+0.5,0,plateName)
+        cmds.move(0,heightBase+2*i+0.5+(distance*i),0,plateName)
         
         newname = 'poly'+ plateName
         cmds.rename('polyCylinder1', newname)
-    #cmds.move(0,-height/2.0,0, "base1.scalePivot","base1.rotatePivot", absolute=True)
-    #cmds.move(0,height/2,0,baseName)
 
 def base():
     radius= cmds.floatSliderGrp(RadiusSlider, q=True, value=True)
@@ -142,11 +162,8 @@ def base():
     baseName = nameObject(name)
     newname = 'poly'+ baseName
     cmds.rename('polyCylinder1', newname)
-    #cmds.move(0,-height/2.0,0, "base1.scalePivot","base1.rotatePivot", absolute=True)
     cmds.move(0,height/2,0,baseName)
-    #cmds.move(0,height/2,0,baseName)
-   # plates(height)
-        
+
 def quadCylinder(name, radius, height, subax, subheight, subcap):
     #quaded cylinders can only have an even subdivision axis number, so this ensures that it will only be set to an even number
     if (subax%2 == 1):
