@@ -73,6 +73,9 @@ def adjustSubH(sliderSubH, *args, **kwargs):
     quadcylinderName = nameObject('base')
     cmds.delete(quadcylinderName)
     base()
+    poleName = nameObject('pole')
+    cmds.delete(poleName)
+    pole()
     
 def adjustCap(sliderCap, *args, **kwargs):
     """
@@ -83,6 +86,9 @@ def adjustCap(sliderCap, *args, **kwargs):
     quadcylinderName = nameObject('base')
     cmds.delete(quadcylinderName)
     base()     
+    poleName = nameObject('pole')
+    cmds.delete(poleName)
+    pole()
     
 def adjustSubAx(sliderSubAx, *args, **kwargs):
     """
@@ -93,7 +99,10 @@ def adjustSubAx(sliderSubAx, *args, **kwargs):
     quadcylinderName = nameObject('base')
     cmds.delete(quadcylinderName)
     base() 
-
+    poleName = nameObject('pole')
+    cmds.delete(poleName)
+    pole()
+    
 def adjustDistance(sliderDistance, sliderNumPlates, sliderHeight, *args, **kwargs):
     """
     sliderHeight: floatSliderGrp object holding the cylinder height value
