@@ -102,6 +102,8 @@ def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, *args, **kwar
     valHeight = cmds.floatSliderGrp(sliderHeight, q=True, value=True)
     valDistance = cmds.floatSliderGrp(sliderDistance, q=True, value=True)
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
+    plates(valHeight, valDistance) 
+    """
     radius= 7
     height = 1
     subax = 5
@@ -124,9 +126,9 @@ def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, *args, **kwar
             
             newname = 'poly'+ plateName
             cmds.rename('polyCylinder1', newname)
-            
+     """      
     #plates(valHeight, valDistance)
-   # radius= 7
+    # radius= 7
     #height = 1
     #subax = 5
     #subheight = 2
@@ -135,7 +137,7 @@ def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, *args, **kwar
     #plateNumber = numberObject(name)
     #moreToAdd = valNumPlates - plateNumber
     #for i in range(0,3):
-   #    plateCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
+    #    plateCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
         #plateName = nameObject(name)
        # cmds.move(0,heightBase+2*i+0.5+(distance*i),0,plateName)
         
@@ -194,6 +196,42 @@ def cakestand():
 
 def plates(heightBase, distance):
     numPlate = cmds.intSliderGrp(NumPlateSlider, q=True, value=True) 
+    valDistance = cmds.floatSliderGrp(DistanceSlider, q=True, value=True)
+    valHeight = cmds.floatSliderGrp(HeightSlider, q=True, value=True)
+    radius= 7
+    height = 1
+    subax = 5
+    subheight = 2
+    subcap = 4
+    name = 'plates'
+    plateNumber = int(numberObject(name))
+    if (plateNumber == 0):
+        plateCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
+        plateName = nameObject(name)
+        cmds.move(0,valHeight+0.5,0,plateName)
+        newname = 'poly'+ plateName
+        cmds.rename('polyCylinder1', newname)
+    plateNumber = int(numberObject(name))
+    differenceNumPlates = numPlate - plateNumber
+    if (differenceNumPlates<0):
+        for i in range(0, differenceNumPlates, -1):
+            numberPlatetoDelete = plateNumber + i
+            namePlatetoDelete = name + str(numberPlatetoDelete)
+            cmds.delete(namePlatetoDelete)
+    
+    if (differenceNumPlates>0):
+        print('current', plateNumber)
+        print('target',numPlate)
+        for i in range(plateNumber,numPlate):
+            plateCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
+            plateName = nameObject(name)
+            #plateName = name + str((plateNumber - (numPlate-i))+1)
+            cmds.move(0,valHeight+2*i+0.5+(valDistance*i),0,plateName)
+            
+            newname = 'poly'+ plateName
+            cmds.rename('polyCylinder1', newname)
+    """
+    numPlate = cmds.intSliderGrp(NumPlateSlider, q=True, value=True) 
     radius= 7
     height = 1
     subax = 5
@@ -215,6 +253,7 @@ def plates(heightBase, distance):
             
         #    newname = 'poly'+ plateName
         #    cmds.rename('polyCylinder1', newname)
+    """
 
 def base():
     radius= cmds.floatSliderGrp(RadiusSlider, q=True, value=True)
