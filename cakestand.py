@@ -10,7 +10,7 @@ cmds.text("Adjust Parameters of the Quad Cylinder")
 cmds.separator(h=20)
 
 #Stem Funcations
-def adjustHeight(sliderHeight, *args, **kwargs):
+def adjustHeight(sliderHeight, sliderNumPlates, *args, **kwargs):
     """
     sliderHeight: floatSliderGrp object holding the cylinder height value
         
@@ -19,15 +19,19 @@ def adjustHeight(sliderHeight, *args, **kwargs):
     
     valHeight = cmds.floatSliderGrp(sliderHeight, q=True, value=True)
     quadcylinderName = nameObject('base')
-    quadcylinderNumber = numberObject('base')
+    quadcylinderNumber = int(numberObject('base'))
+    plateName = nameObject('plate')
+    plateNumber = int(numberObject('plate'))
     cmds.select(quadcylinderName, r=True)
-    cmds.setAttr('polyCylinder' + quadcylinderNumber + '.height', valHeight, **kwargs) 
+    cmds.setAttr('polyCylinder' + str(quadcylinderNumber+(sliderNumPlates*(quadcylinderNumber-1)))+ '.height', valHeight, **kwargs) 
     cmds.move(0,valHeight/2,0, quadcylinderName)
-    for i in range(0,3):
-       nameplate = 'plates'+ str(i+1)
+    for i in range(0, sliderNumPlates):
+       print(i)
+       nameplate = 'plates'+ str((plateNumber - (sliderNumPlates-i))+1)
+       print(nameplate)
        cmds.move(0,valHeight+2*i+0.5,0,nameplate)
     
-def adjustRadius(sliderRadius, *args, **kwargs):
+def adjustRadius(sliderRadius, sliderNumPlates, *args, **kwargs):
     """
     sliderRadius: floatSliderGrp object holding the cylinder radius value
         
@@ -36,9 +40,9 @@ def adjustRadius(sliderRadius, *args, **kwargs):
     
     valRadius = cmds.floatSliderGrp(sliderRadius, q=True, value=True)
     quadcylinderName = nameObject('base')
-    quadcylinderNumber = numberObject('base')
+    quadcylinderNumber = int(numberObject('base'))
     cmds.select(quadcylinderName, r=True)
-    cmds.setAttr('polyCylinder' + quadcylinderNumber+ '.radius', valRadius, **kwargs) 
+    cmds.setAttr('polyCylinder' + str(quadcylinderNumber+(sliderNumPlates*(quadcylinderNumber-1))) + '.radius', valRadius, **kwargs) 
     
 def adjustSubH(sliderSubH, *args, **kwargs):
     """
@@ -85,10 +89,10 @@ def numberObject(name):
     
 
 HeightSlider = cmds.floatSliderGrp(label='Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
-cmds.floatSliderGrp(HeightSlider,  e=True, dc = partial(adjustHeight, HeightSlider))
+cmds.floatSliderGrp(HeightSlider, e=True, dc = partial(adjustHeight, HeightSlider, 3))
 
 RadiusSlider = cmds.floatSliderGrp(label='Radius', columnAlign= (1,'right'), field=True, min=5, max=20, value=0, step=0.1, dc = 'empty')
-cmds.floatSliderGrp(RadiusSlider,  e=True, dc = partial(adjustRadius, RadiusSlider))
+cmds.floatSliderGrp(RadiusSlider,  e=True, dc = partial(adjustRadius, RadiusSlider, 3))
 
 SubHSlider = cmds.intSliderGrp(label='Subdivision Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
 cmds.intSliderGrp(SubHSlider,  e=True, dc = partial(adjustSubH, SubHSlider))
@@ -115,7 +119,7 @@ def plates(heightBase):
     for i in range(0,3):
         plateCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
         baseName = nameObject(name)
-        cmds.move(0,heightBase/2+heightBase+2*i,0,baseName)
+        cmds.move(0,heightBase+2*i+0.5,0,baseName)
     #cmds.move(0,-height/2.0,0, "base1.scalePivot","base1.rotatePivot", absolute=True)
     #cmds.move(0,height/2,0,baseName)
 
