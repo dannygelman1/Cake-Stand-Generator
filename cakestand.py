@@ -108,10 +108,11 @@ def base():
     subax = cmds.intSliderGrp(SubAxSlider, q=True, value=True)
     subheight = cmds.intSliderGrp(SubHSlider, q=True, value=True)
     subcap = cmds.intSliderGrp(CapSlider, q=True, value=True)
-    
-    baseCyl = quadCylinder('base', radius, height, subax, subheight, subcap)
+    name = 'base'
+    baseCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
+    baseName = nameObject(name)
     #cmds.move(0,-height/2.0,0, "base1.scalePivot","base1.rotatePivot", absolute=True)
-    cmds.move(0,height/2,0,'base1')
+    cmds.move(0,height/2,0,baseName)
     
 def quadCylinder(name, radius, height, subax, subheight, subcap):
     #quaded cylinders can only have an even subdivision axis number, so this ensures that it will only be set to an even number
