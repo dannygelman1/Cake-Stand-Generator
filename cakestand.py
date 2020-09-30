@@ -23,6 +23,9 @@ def adjustHeight(sliderHeight, *args, **kwargs):
     cmds.select(quadcylinderName, r=True)
     cmds.setAttr('polyCylinder' + quadcylinderNumber + '.height', valHeight, **kwargs) 
     cmds.move(0,valHeight/2,0, quadcylinderName)
+    for i in range(0,3):
+       nameplate = 'plates'+ str(i+1)
+       cmds.move(0,valHeight+2*i+0.5,0,nameplate)
     
 def adjustRadius(sliderRadius, *args, **kwargs):
     """
@@ -84,7 +87,7 @@ def numberObject(name):
 HeightSlider = cmds.floatSliderGrp(label='Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
 cmds.floatSliderGrp(HeightSlider,  e=True, dc = partial(adjustHeight, HeightSlider))
 
-RadiusSlider = cmds.floatSliderGrp(label='Radius', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
+RadiusSlider = cmds.floatSliderGrp(label='Radius', columnAlign= (1,'right'), field=True, min=5, max=20, value=0, step=0.1, dc = 'empty')
 cmds.floatSliderGrp(RadiusSlider,  e=True, dc = partial(adjustRadius, RadiusSlider))
 
 SubHSlider = cmds.intSliderGrp(label='Subdivision Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
@@ -102,6 +105,20 @@ cmds.button(l = 'Create Quad Cylinder',  c = 'base()')
 cmds.separator(h=20)
 cmds.showWindow()
 
+def plates(heightBase):
+    radius= 7
+    height = 1
+    subax = 5
+    subheight = 2
+    subcap = 4
+    name = 'plates'
+    for i in range(0,3):
+        plateCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
+        baseName = nameObject(name)
+        cmds.move(0,heightBase/2+heightBase+2*i,0,baseName)
+    #cmds.move(0,-height/2.0,0, "base1.scalePivot","base1.rotatePivot", absolute=True)
+    #cmds.move(0,height/2,0,baseName)
+
 def base():
     radius= cmds.floatSliderGrp(RadiusSlider, q=True, value=True)
     height = cmds.floatSliderGrp(HeightSlider, q=True, value=True)
@@ -113,7 +130,9 @@ def base():
     baseName = nameObject(name)
     #cmds.move(0,-height/2.0,0, "base1.scalePivot","base1.rotatePivot", absolute=True)
     cmds.move(0,height/2,0,baseName)
-    
+    cmds.move(0,height/2,0,baseName)
+    plates(height)
+        
 def quadCylinder(name, radius, height, subax, subheight, subcap):
     #quaded cylinders can only have an even subdivision axis number, so this ensures that it will only be set to an even number
     if (subax%2 == 1):
@@ -122,12 +141,14 @@ def quadCylinder(name, radius, height, subax, subheight, subcap):
     startEdgeToDelete = totaledges - subax*2
     nameHash = name+'#'
     nameStar = name+'*'
+    
     cylinder = cmds.polyCylinder(n=nameHash, r=radius, h=height, sx=subax, sy=subheight, sc=subcap)
     quadcylinderls = cmds.ls(nameStar, long=True)
     quadcylinderNumber= str(len(quadcylinderls)/2)
-    
+    nameobj = nameObject(name)
     #deleting every other edge in the inner most circle of the cylinder to turn the inner triangles into quads
     listtodel = []
     for i in range (startEdgeToDelete,totaledges,2):
         listtodel.append(name + str(quadcylinderNumber) + '.e[' + str(i) + ']')
     cmds.delete(listtodel)
+    #cmds.move(0,-height/2.0,0, nameobj+ ".scalePivot",nameobj+".rotatePivot", absolute=True)
