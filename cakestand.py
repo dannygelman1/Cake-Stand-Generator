@@ -322,37 +322,28 @@ def numberGroup(name):
     return quadcylinderNumber
     
 
-HeightSlider = cmds.floatSliderGrp(label='Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
-HeightPlateSlider = cmds.floatSliderGrp(label='Height Plate', columnAlign= (1,'right'), field=True, min=0.5, max=4, value=0, step=0.1, dc = 'empty')
-DistanceSlider = cmds.floatSliderGrp(label='Plate Distance', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
-NumPlateSlider = cmds.intSliderGrp(label='Number Plates', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
-RadiusPlateSlider = cmds.floatSliderGrp(label='Radius Plate', columnAlign= (1,'right'), field=True, min=5, max=20, value=0, step=0.1, dc = 'empty')
-RadiusPlateTaper = cmds.floatSliderGrp(label='Radius Plate Taper', columnAlign= (1,'right'), field=True, min=0, max=1, value=0, step=0.1, dc = 'empty')
-cmds.floatSliderGrp(RadiusPlateTaper, e=True, dc = partial(adjustRadiusTaperPlate, RadiusPlateSlider, NumPlateSlider, RadiusPlateTaper))
-cmds.floatSliderGrp(RadiusPlateSlider, e=True, dc = partial(adjustRadiusPlate, RadiusPlateSlider, NumPlateSlider, RadiusPlateTaper))
+NumPlateSlider = cmds.intSliderGrp(label='Plate Number', columnAlign= (1,'right'), field=True, min=1, max=10, value=0, step=0.1, dc = 'empty')
+RadiusPlateSlider = cmds.floatSliderGrp(label='Plate Radius', columnAlign= (1,'right'), field=True, min=5, max=30, value=0, step=0.1, dc = 'empty')
+RadiusPlateTaper = cmds.floatSliderGrp(label='Plate Taper', columnAlign= (1,'right'), field=True, min=0, max=1, value=0, step=0.1, dc = 'empty')
+DistanceSlider = cmds.floatSliderGrp(label='Plate Distance', columnAlign= (1,'right'), field=True, min=1, max=5, value=0, step=0.1, dc = 'empty')
+HeightPlateSlider = cmds.floatSliderGrp(label='Plate Height', columnAlign= (1,'right'), field=True, min=0.5, max=2, value=0, step=0.1, dc = 'empty')
+HeightSlider = cmds.floatSliderGrp(label='Base Height', columnAlign= (1,'right'), field=True, min=1, max=10, value=0, step=0.1, dc = 'empty')
+RadiusSlider = cmds.floatSliderGrp(label='Base Radius', columnAlign= (1,'right'), field=True, min=5, max=10, value=0, step=0.1, dc = 'empty')
+RadiusPoleSlider = cmds.floatSliderGrp(label='Pole Radius', columnAlign= (1,'right'), field=True, min=0.5, max=2, value=0, step=0.1, dc = 'empty')
+SubHSlider = cmds.intSliderGrp(label='Horizontal Sections', columnAlign= (1,'right'), field=True, min=1, max=4, value=0, step=0.1, dc = 'empty')
+CapSlider = cmds.intSliderGrp(label='Density', columnAlign= (1,'right'), field=True, min=1, max=4, value=0, step=0.1, dc = 'empty')
+SubAxSlider = cmds.intSliderGrp(label='Vertical Sections', columnAlign= (1,'right'), field=True, min=6, max=20, value=0, step=0.1, dc = 'empty')
 cmds.intSliderGrp(NumPlateSlider, e=True, dc = partial(adjustNumPlates, NumPlateSlider, DistanceSlider, HeightSlider, RadiusPlateSlider, RadiusPlateTaper, HeightPlateSlider))
-
-cmds.floatSliderGrp(HeightSlider, e=True, dc = partial(adjustHeight, HeightSlider, NumPlateSlider, DistanceSlider, HeightPlateSlider))
-
-cmds.floatSliderGrp(HeightPlateSlider, e=True, dc = partial(adjustHeightPlate, HeightSlider, NumPlateSlider, DistanceSlider, HeightPlateSlider))
-
-RadiusSlider = cmds.floatSliderGrp(label='Radius Base', columnAlign= (1,'right'), field=True, min=5, max=20, value=0, step=0.1, dc = 'empty')
-cmds.floatSliderGrp(RadiusSlider,  e=True, dc = partial(adjustRadiusBase, RadiusSlider, NumPlateSlider))
-
-RadiusPoleSlider = cmds.floatSliderGrp(label='Radius Pole', columnAlign= (1,'right'), field=True, min=0.5, max=4, value=0, step=0.1, dc = 'empty')
-cmds.floatSliderGrp(RadiusPoleSlider,  e=True, dc = partial(adjustRadiusPole, RadiusPoleSlider))
-
-
-SubHSlider = cmds.intSliderGrp(label='Subdivision Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
-cmds.intSliderGrp(SubHSlider,  e=True, dc = partial(adjustSubH, SubHSlider, NumPlateSlider))
-
-CapSlider = cmds.intSliderGrp(label='Subdivision Cap', columnAlign= (1,'right'), field=True, min=2, max=20, value=0, step=0.1, dc = 'empty')
-cmds.intSliderGrp(CapSlider,  e=True, dc = partial(adjustCap, CapSlider, NumPlateSlider))
-
-SubAxSlider = cmds.intSliderGrp(label='Subdivision Axis', columnAlign= (1,'right'), field=True, min=6, max=20, value=0, step=0.1, dc = 'empty')
-cmds.intSliderGrp(SubAxSlider,  e=True, dc = partial(adjustSubAx, SubAxSlider, NumPlateSlider))
+cmds.floatSliderGrp(RadiusPlateSlider, e=True, dc = partial(adjustRadiusPlate, RadiusPlateSlider, NumPlateSlider, RadiusPlateTaper))
+cmds.floatSliderGrp(RadiusPlateTaper, e=True, dc = partial(adjustRadiusTaperPlate, RadiusPlateSlider, NumPlateSlider, RadiusPlateTaper))
 cmds.floatSliderGrp(DistanceSlider,  e=True, dc = partial(adjustDistance, DistanceSlider, NumPlateSlider, HeightSlider, HeightPlateSlider))
-
+cmds.floatSliderGrp(HeightPlateSlider, e=True, dc = partial(adjustHeightPlate, HeightSlider, NumPlateSlider, DistanceSlider, HeightPlateSlider))
+cmds.floatSliderGrp(HeightSlider, e=True, dc = partial(adjustHeight, HeightSlider, NumPlateSlider, DistanceSlider, HeightPlateSlider))
+cmds.floatSliderGrp(RadiusSlider,  e=True, dc = partial(adjustRadiusBase, RadiusSlider, NumPlateSlider))
+cmds.floatSliderGrp(RadiusPoleSlider,  e=True, dc = partial(adjustRadiusPole, RadiusPoleSlider))
+cmds.intSliderGrp(SubHSlider,  e=True, dc = partial(adjustSubH, SubHSlider, NumPlateSlider))
+cmds.intSliderGrp(CapSlider,  e=True, dc = partial(adjustCap, CapSlider, NumPlateSlider))
+cmds.intSliderGrp(SubAxSlider,  e=True, dc = partial(adjustSubAx, SubAxSlider, NumPlateSlider))
 
 #Button
 cmds.button(l = 'Create Quad Cylinder',  c = 'cakestand()')
