@@ -1,12 +1,12 @@
 from functools import partial
 
 #Window
-cmds.window("Quad Cylinder", sizeable=True, resizeToFitChildren=True) 
+cmds.window("Cake Stand", sizeable=True, resizeToFitChildren=True) 
 cmds.columnLayout( adjustableColumn=True )                                             
 
 #Text
 cmds.separator(h=20)
-cmds.text("Adjust Parameters of the Quad Cylinder")
+cmds.text("Adjust Parameters of the Cake Stand")
 cmds.separator(h=20)
 
 #Stem Funcations
