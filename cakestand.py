@@ -415,7 +415,7 @@ def plates():
         newname = 'poly'+ plateName
         cmds.rename('polyCylinder1', newname)
         cmds.parent(plateName, nameGroup('cakeStand'))
-        cmds.select(nameGroup('cakeStand'),add=True)
+        cmds.select(nameGroup('cakeStand'),r=True)
     plateNumber = int(numberObject(name))
     #calculating difference between current number of plates and target number
     differenceNumPlates = numPlate - plateNumber
@@ -436,7 +436,7 @@ def plates():
             newname = 'poly'+ plateName
             cmds.rename('polyCylinder1', newname)
             cmds.parent(plateName, nameGroup('cakeStand'))
-            cmds.select(nameGroup('cakeStand'),add=True)
+            cmds.select(nameGroup('cakeStand'),r=True)
 
 def base():
     """
@@ -455,7 +455,7 @@ def base():
     cmds.rename('polyCylinder1', newname)
     cmds.move(0,height/2,0,baseName)
     cmds.parent(baseName, nameGroup('cakeStand'))
-    cmds.select(nameGroup('cakeStand'),add=True)
+    cmds.select(nameGroup('cakeStand'),r=True)
     
 
 
@@ -479,7 +479,7 @@ def pole():
     cmds.rename('polyCylinder1', newname)
     cmds.move(0,heightPole/2,0,baseName)
     cmds.parent(baseName, nameGroup('cakeStand'))
-    cmds.select(nameGroup('cakeStand'),add=True)
+    cmds.select(nameGroup('cakeStand'),r=True)
 
 def quadCylinder(name, radius, height, subax, subheight, subcap):
     """
