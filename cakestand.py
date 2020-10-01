@@ -12,9 +12,12 @@ cmds.separator(h=20)
 #Stem Funcations
 def adjustHeight(sliderHeight, sliderNumPlates, sliderDistance, slidehieghtPlate, *args, **kwargs):
     """
-    sliderHeight: floatSliderGrp object holding the cylinder height value
+    sliderHeight: floatSliderGrp object holding the base height value
+    sliderNumPlates: floatSliderGrp object holding the number of plate value
+    sliderDistance: floatSliderGrp object holding the distance value
+    slidehieghtPlate: floatSliderGrp object holding the plate height value
         
-    Adjusts the cylinder height based on the slider value
+    Adjusts the base height based on the slider value
     """
     
     valHeight = cmds.floatSliderGrp(sliderHeight, q=True, value=True)
@@ -46,9 +49,10 @@ def adjustHeight(sliderHeight, sliderNumPlates, sliderDistance, slidehieghtPlate
     
 def adjustRadiusBase(sliderRadius, sliderNumPlates, *args, **kwargs):
     """
-    sliderRadius: floatSliderGrp object holding the cylinder radius value
-        
-    Adjusts the cylinder radius based on the slider value
+    sliderRadius: floatSliderGrp object holding the base radius value
+    sliderNumPlates : floatSliderGrp object holding the number of plates value
+
+    Adjusts the base radius based on the slider value
     """
     
     valRadius = cmds.floatSliderGrp(sliderRadius, q=True, value=True)
@@ -58,9 +62,9 @@ def adjustRadiusBase(sliderRadius, sliderNumPlates, *args, **kwargs):
     
 def adjustRadiusPole(sliderRadius, *args, **kwargs):
     """
-    sliderRadius: floatSliderGrp object holding the cylinder radius value
+    sliderRadius: floatSliderGrp object holding the pole radius value
         
-    Adjusts the cylinder radius based on the slider value
+    Adjusts the pole radius based on the slider value
     """
     
     valRadius = cmds.floatSliderGrp(sliderRadius, q=True, value=True)
@@ -71,6 +75,7 @@ def adjustRadiusPole(sliderRadius, *args, **kwargs):
 def adjustSubH(sliderSubH, sliderNumPlates, *args, **kwargs):
     """
     sliderSubH: floatSliderGrp object holding the cylinder subdivision height value
+    sliderNumPlates: floatSliderGrp object holding the number of plates value
         
     Adjusts the cylinder subdivision height based on the slider value
     """
@@ -98,6 +103,7 @@ def adjustSubH(sliderSubH, sliderNumPlates, *args, **kwargs):
 def adjustCap(sliderCap,sliderNumPlates, *args, **kwargs):
     """
     sliderCap: floatSliderGrp object holding the cylinder subdivision cap value
+    sliderNumPlates: floatSliderGrp object holding the number of plates value
         
     Adjusts the cylinder subdivision cap based on the slider value
     """
@@ -125,6 +131,7 @@ def adjustCap(sliderCap,sliderNumPlates, *args, **kwargs):
 def adjustSubAx(sliderSubAx,sliderNumPlates, *args, **kwargs):
     """
     sliderSubAx: floatSliderGrp object holding the cylinder subdivision axis value
+    sliderNumPlates: floatSliderGrp object holding the number of plates value
         
     Adjusts the cylinder subdivision axis based on the slider value
     """
@@ -152,8 +159,11 @@ def adjustSubAx(sliderSubAx,sliderNumPlates, *args, **kwargs):
 def adjustDistance(sliderDistance, sliderNumPlates, sliderHeight, sliderPlateHeight, *args, **kwargs):
     """
     sliderHeight: floatSliderGrp object holding the cylinder height value
+    sliderNumPlates: floatSliderGrp object holding the number of plates value
+    sliderHeight: floatSliderGrp object holding the height value
+    sliderPlateHeight: floatSliderGrp object holding the plate height value
         
-    Adjusts the cylinder height based on the slider value
+    Adjusts the distance between plates based on the slider value
     """
     valHeight = cmds.floatSliderGrp(sliderHeight, q=True, value=True)
     valDistance = cmds.floatSliderGrp(sliderDistance, q=True, value=True)
@@ -180,9 +190,15 @@ def adjustDistance(sliderDistance, sliderNumPlates, sliderHeight, sliderPlateHei
        
 def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, sliderRadiusPlate, sliderNumTaper, sliderPlateHeight, *args, **kwargs):
     """
-    sliderHeight: floatSliderGrp object holding the cylinder height value
+    sliderNumPlates: floatSliderGrp object holding the number of plates value
+    sliderDistance: floatSliderGrp object holding the distance value
+    sliderHeight: floatSliderGrp object holding the base height value
+    sliderRadiusPlate: floatSliderGrp object holding the radius plate value
+    sliderNumTaper: floatSliderGrp object holding the taper value
+    sliderPlateHeight: floatSliderGrp object holding the plate height value
+
         
-    Adjusts the cylinder height based on the slider value
+    Adjusts the number of plates based on the slider value
     """
     valHeight = cmds.floatSliderGrp(sliderHeight, q=True, value=True)
     valDistance = cmds.floatSliderGrp(sliderDistance, q=True, value=True)
@@ -215,9 +231,11 @@ def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, sliderRadiusP
 
 def adjustRadiusPlate(sliderRadiusPlate, sliderNumPlates,sliderNumTaper, *args, **kwargs):
     """
-    sliderHeight: floatSliderGrp object holding the cylinder height value
+    sliderRadiusPlate: floatSliderGrp object holding the plate radius value
+    sliderNumPlates: floatSliderGrp object holding the number of plates value
+    sliderNumTaper: floatSliderGrp object holding the taper value
         
-    Adjusts the cylinder height based on the slider value
+    Adjusts the plate radius based on the slider value
     """
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
     valRadius = cmds.floatSliderGrp(sliderRadiusPlate, q=True, value=True)
@@ -239,9 +257,11 @@ def adjustRadiusPlate(sliderRadiusPlate, sliderNumPlates,sliderNumTaper, *args, 
 
 def adjustRadiusTaperPlate(sliderRadiusPlate, sliderNumPlates, sliderNumTaper, *args, **kwargs):
     """
-    sliderHeight: floatSliderGrp object holding the cylinder height value
+    sliderRadiusPlate: floatSliderGrp object holding the plate radius value
+    sliderNumPlates: floatSliderGrp object holding the number of plates value
+    sliderNumTaper: floatSliderGrp object holding the taper value
         
-    Adjusts the cylinder height based on the slider value
+    Adjusts the taper value based on the slider value
     """
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
     valRadius = cmds.floatSliderGrp(sliderRadiusPlate, q=True, value=True)
@@ -263,7 +283,10 @@ def adjustRadiusTaperPlate(sliderRadiusPlate, sliderNumPlates, sliderNumTaper, *
        
 def adjustHeightPlate(sliderHeight, sliderNumPlates, sliderDistance, slidehieghtPlate, *args, **kwargs):
     """
-    sliderHeight: floatSliderGrp object holding the cylinder height value
+    sliderHeight: floatSliderGrp object holding the base height value
+    sliderNumPlates: floatSliderGrp object holding the number of plates value
+    sliderDistance: floatSliderGrp object holding the distance value
+    slidehieghtPlate: floatSliderGrp object holding the plate height value
         
     Adjusts the cylinder height based on the slider value
     """
@@ -295,6 +318,11 @@ def adjustHeightPlate(sliderHeight, sliderNumPlates, sliderDistance, slidehieght
     cmds.move(0,heightPole/2,0, poleName)
     
 def nameObject(name):
+    """
+    name: prefix of the object
+
+    Finds the name of the last created object in the scene that starts with the name prefix
+    """
     nameStar = name+'*'
     quadcylinderls = cmds.ls(nameStar, long=True)
     quadcylinderNumber= str(len(quadcylinderls)/2)
@@ -302,6 +330,11 @@ def nameObject(name):
     return quadcylinderName
     
 def numberObject(name):
+    """
+    name: prefix of the object
+
+    Finds the number of the last created object in the scene that starts with the name prefix
+    """
     nameStar = name+'*'
     quadcylinderls = cmds.ls(nameStar, long=True)
     quadcylinderNumber= str(len(quadcylinderls)/2)
@@ -309,6 +342,11 @@ def numberObject(name):
     
 
 def nameGroup(name):
+    """
+    name: prefix of the group
+
+    Finds the name of the last created group in the scene that starts with the name prefix
+    """
     nameStar = name+'*'
     quadcylinderls = cmds.ls(nameStar, long=True)
     quadcylinderNumber= str(len(quadcylinderls))
@@ -316,6 +354,11 @@ def nameGroup(name):
     return quadcylinderName
  
 def numberGroup(name):
+    """
+    name: prefix of the group
+
+    Finds the number of the last created group in the scene that starts with the name prefix
+    """
     nameStar = name+'*'
     quadcylinderls = cmds.ls(nameStar, long=True)
     quadcylinderNumber= str(len(quadcylinderls))
@@ -346,11 +389,14 @@ cmds.intSliderGrp(CapSlider,  e=True, dc = partial(adjustCap, CapSlider, NumPlat
 cmds.intSliderGrp(SubAxSlider,  e=True, dc = partial(adjustSubAx, SubAxSlider, NumPlateSlider))
 
 #Button
-cmds.button(l = 'Create Quad Cylinder',  c = 'cakestand()')
+cmds.button(l = 'Create Cake Stand',  c = 'cakestand()')
 cmds.separator(h=20)
 cmds.showWindow()
 
 def cakestand():
+    """
+    Creates a cake stand
+    """
     cakestand = cmds.group(empty=True, name='cakeStand#')
     height = cmds.floatSliderGrp(HeightSlider, q=True, value=True) 
     distance = cmds.floatSliderGrp(DistanceSlider, q=True, value=True) 
@@ -359,6 +405,9 @@ def cakestand():
     pole()
 
 def plates():
+    """
+    Creates all the plates of the cake stand
+    """
     numPlate = cmds.intSliderGrp(NumPlateSlider, q=True, value=True) 
     valDistance = cmds.floatSliderGrp(DistanceSlider, q=True, value=True)
     valHeight = cmds.floatSliderGrp(HeightSlider, q=True, value=True)
@@ -403,6 +452,9 @@ def plates():
             cmds.select(nameGroup('cakeStand'),add=True)
 
 def base():
+    """
+    Creates the base of the cake stand
+    """
     radius= cmds.floatSliderGrp(RadiusSlider, q=True, value=True)
     height = cmds.floatSliderGrp(HeightSlider, q=True, value=True)
     subax = cmds.intSliderGrp(SubAxSlider, q=True, value=True)
@@ -421,6 +473,9 @@ def base():
 
 
 def pole():
+    """
+    Creates the pole of the cake stand
+    """
     radius= cmds.floatSliderGrp(RadiusPoleSlider, q=True, value=True)
     subax = cmds.intSliderGrp(SubAxSlider, q=True, value=True)
     subheight = cmds.intSliderGrp(SubHSlider, q=True, value=True)
@@ -440,6 +495,16 @@ def pole():
     cmds.select(nameGroup('cakeStand'),add=True)
 
 def quadCylinder(name, radius, height, subax, subheight, subcap):
+    """
+    name: the name of the quaded cylinder to be made
+    radius: the radius of the quaded cylinder to be made
+    height: the height of the quaded cylinder to be made
+    subax: the subdivision axis of the quaded cylinder to be made
+    subheight: the subdivision height of the quaded cylinder to be made
+    subcap: the subdivision cap of the quaded cylinder to be made
+
+    Creates a quaded cylinder with the given paramters
+    """
     #quaded cylinders can only have an even subdivision axis number, so this ensures that it will only be set to an even number
     if (subax%2 == 1):
         subax+=1
@@ -457,5 +522,4 @@ def quadCylinder(name, radius, height, subax, subheight, subcap):
     for i in range (startEdgeToDelete,totaledges,2):
         listtodel.append(name + str(quadcylinderNumber) + '.e[' + str(i) + ']')
     cmds.delete(listtodel)
-    #cmds.move(0,-height/2.0,0, nameobj+ ".scalePivot",nameobj+".rotatePivot", absolute=True)
 
