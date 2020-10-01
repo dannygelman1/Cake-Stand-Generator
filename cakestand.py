@@ -107,7 +107,7 @@ def adjustSubH(sliderSubH, sliderNumPlates, *args, **kwargs):
        cmds.delete(nameplate)
     plates()
       
-def adjustCap(sliderCap, *args, **kwargs):
+def adjustCap(sliderCap,sliderNumPlates, *args, **kwargs):
     """
     sliderCap: floatSliderGrp object holding the cylinder subdivision cap value
         
@@ -119,8 +119,22 @@ def adjustCap(sliderCap, *args, **kwargs):
     poleName = nameObject('pole')
     cmds.delete(poleName)
     pole()
+    valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
+    numBase = int(numberObject('base'))
+    extraP = ''
+    for i in range(0,numBase):
+        extraP+= 'p'
+    name = extraP + 'lates'
+    plateName = nameObject(name)
+    plateNumber = int(numberObject(name))
+    for i in range(0, valNumPlates):
+       nameplate = name + str((plateNumber - (valNumPlates-i))+1)
+       print('H', i)
+       print('H2',nameplate)
+       cmds.delete(nameplate)
+    plates()
     
-def adjustSubAx(sliderSubAx, *args, **kwargs):
+def adjustSubAx(sliderSubAx,sliderNumPlates, *args, **kwargs):
     """
     sliderSubAx: floatSliderGrp object holding the cylinder subdivision axis value
         
@@ -132,6 +146,20 @@ def adjustSubAx(sliderSubAx, *args, **kwargs):
     poleName = nameObject('pole')
     cmds.delete(poleName)
     pole()
+    valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
+    numBase = int(numberObject('base'))
+    extraP = ''
+    for i in range(0,numBase):
+        extraP+= 'p'
+    name = extraP + 'lates'
+    plateName = nameObject(name)
+    plateNumber = int(numberObject(name))
+    for i in range(0, valNumPlates):
+       nameplate = name + str((plateNumber - (valNumPlates-i))+1)
+       print('H', i)
+       print('H2',nameplate)
+       cmds.delete(nameplate)
+    plates()
     
 def adjustDistance(sliderDistance, sliderNumPlates, sliderHeight, sliderPlateHeight, *args, **kwargs):
     """
@@ -363,7 +391,7 @@ def numberObject(name):
     
 
 HeightSlider = cmds.floatSliderGrp(label='Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
-HeightPlateSlider = cmds.floatSliderGrp(label='Height Plate', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
+HeightPlateSlider = cmds.floatSliderGrp(label='Height Plate', columnAlign= (1,'right'), field=True, min=0.5, max=4, value=0, step=0.1, dc = 'empty')
 DistanceSlider = cmds.floatSliderGrp(label='Plate Distance', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
 NumPlateSlider = cmds.intSliderGrp(label='Number Plates', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
 RadiusPlateSlider = cmds.floatSliderGrp(label='Radius Plate', columnAlign= (1,'right'), field=True, min=5, max=20, value=0, step=0.1, dc = 'empty')
@@ -379,7 +407,7 @@ cmds.floatSliderGrp(HeightPlateSlider, e=True, dc = partial(adjustHeightPlate, H
 RadiusSlider = cmds.floatSliderGrp(label='Radius Base', columnAlign= (1,'right'), field=True, min=5, max=20, value=0, step=0.1, dc = 'empty')
 cmds.floatSliderGrp(RadiusSlider,  e=True, dc = partial(adjustRadiusBase, RadiusSlider, NumPlateSlider))
 
-RadiusPoleSlider = cmds.floatSliderGrp(label='Radius Pole', columnAlign= (1,'right'), field=True, min=1, max=8, value=0, step=0.1, dc = 'empty')
+RadiusPoleSlider = cmds.floatSliderGrp(label='Radius Pole', columnAlign= (1,'right'), field=True, min=0.5, max=4, value=0, step=0.1, dc = 'empty')
 cmds.floatSliderGrp(RadiusPoleSlider,  e=True, dc = partial(adjustRadiusPole, RadiusPoleSlider))
 
 
@@ -387,10 +415,10 @@ SubHSlider = cmds.intSliderGrp(label='Subdivision Height', columnAlign= (1,'righ
 cmds.intSliderGrp(SubHSlider,  e=True, dc = partial(adjustSubH, SubHSlider, NumPlateSlider))
 
 CapSlider = cmds.intSliderGrp(label='Subdivision Cap', columnAlign= (1,'right'), field=True, min=2, max=20, value=0, step=0.1, dc = 'empty')
-cmds.intSliderGrp(CapSlider,  e=True, dc = partial(adjustCap, CapSlider))
+cmds.intSliderGrp(CapSlider,  e=True, dc = partial(adjustCap, CapSlider, NumPlateSlider))
 
 SubAxSlider = cmds.intSliderGrp(label='Subdivision Axis', columnAlign= (1,'right'), field=True, min=6, max=20, value=0, step=0.1, dc = 'empty')
-cmds.intSliderGrp(SubAxSlider,  e=True, dc = partial(adjustSubAx, SubAxSlider))
+cmds.intSliderGrp(SubAxSlider,  e=True, dc = partial(adjustSubAx, SubAxSlider, NumPlateSlider))
 
 #DistanceSlider = cmds.floatSliderGrp(label='Plate Distance', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
 cmds.floatSliderGrp(DistanceSlider,  e=True, dc = partial(adjustDistance, DistanceSlider, NumPlateSlider, HeightSlider, HeightPlateSlider))
