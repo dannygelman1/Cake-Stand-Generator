@@ -308,7 +308,7 @@ def nameObject(name):
     
 def numberObject(name):
     """
-    name: prefix of the object
+    number: prefix of the object
 
     Finds the number of the last created object in the scene that starts with the name prefix
     """
@@ -332,7 +332,7 @@ def nameGroup(name):
  
 def numberGroup(name):
     """
-    name: prefix of the group
+    number: prefix of the group
 
     Finds the number of the last created group in the scene that starts with the name prefix
     """
