@@ -32,7 +32,7 @@ def adjustHeight(sliderHeight, sliderNumPlates, sliderDistance, slidehieghtPlate
     
     plateName = nameObject(name)
     plateNumber = int(numberObject(name))
-    cmds.select(quadcylinderName, r=True)
+  #  cmds.select(quadcylinderName, add=True)
     cmds.setAttr('polybase' + str(quadcylinderNumber)+ '.height', valHeight, **kwargs) 
     cmds.move(0,valHeight/2,0, quadcylinderName)
     for i in range(0, valNumPlates):
@@ -44,7 +44,7 @@ def adjustHeight(sliderHeight, sliderNumPlates, sliderDistance, slidehieghtPlate
     poleNumber = int(numberObject('pole'))
     poleName = nameObject('pole')
     heightPole = valHeight+2*(valNumPlates-1)+(valHeightPlates/2.0) +(valDistance*(valNumPlates-1))
-    cmds.select(poleName, r=True)
+    #cmds.select(poleName,add=True)
     cmds.setAttr('polypole' + str(poleNumber) + '.height', heightPole, **kwargs) 
     cmds.move(0,heightPole/2,0, poleName)
     
@@ -58,7 +58,7 @@ def adjustRadiusBase(sliderRadius, sliderNumPlates, *args, **kwargs):
     valRadius = cmds.floatSliderGrp(sliderRadius, q=True, value=True)
     quadcylinderName = nameObject('base')
     quadcylinderNumber = int(numberObject('base'))
-    cmds.select(quadcylinderName, r=True)
+   # cmds.select(quadcylinderName, add=True)
     cmds.setAttr('polybase' + str(quadcylinderNumber) + '.radius', valRadius, **kwargs) 
     
 def adjustRadiusPole(sliderRadius, *args, **kwargs):
@@ -71,7 +71,7 @@ def adjustRadiusPole(sliderRadius, *args, **kwargs):
     valRadius = cmds.floatSliderGrp(sliderRadius, q=True, value=True)
     poleName = nameObject('pole')
     poleNumber = int(numberObject('pole'))
-    cmds.select(poleName, r=True)
+    #cmds.select(poleName, add=True)
     cmds.setAttr('polypole' + str(poleNumber) + '.radius', valRadius, **kwargs) 
     
     #poleName = int(numberObject('pole'))
@@ -194,7 +194,7 @@ def adjustDistance(sliderDistance, sliderNumPlates, sliderHeight, sliderPlateHei
     poleNumber = int(numberObject('pole'))
     poleName = nameObject('pole')
     heightPole = valHeight+2*(valNumPlates-1)+(valHeightPlates/2.0)+(valDistance*(valNumPlates-1))
-    cmds.select(poleName, r=True)
+   # cmds.select(poleName, add=True)
     cmds.setAttr('polypole' + str(poleNumber) + '.height', heightPole, **kwargs) 
     cmds.move(0,heightPole/2,0, poleName)
        
@@ -219,7 +219,7 @@ def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, sliderRadiusP
     poleNumber = int(numberObject('pole'))
     poleName = nameObject('pole')
     heightPole = valHeight+2*(valNumPlates-1)+(valHeightPlates/2.0)+(valDistance*(valNumPlates-1))
-    cmds.select(poleName, r=True)
+    #cmds.select(poleName, add=True)
     cmds.setAttr('polypole' + str(poleNumber) + '.height', heightPole, **kwargs) 
     cmds.move(0,heightPole/2,0, poleName)
     
@@ -237,7 +237,7 @@ def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, sliderRadiusP
        print(i)
        nameplate = name + str((plateNumber - (valNumPlates-i))+1)
        print(nameplate)
-       cmds.select(plateName, r=True)
+       #cmds.select(plateName, add=True)
        cmds.setAttr('poly' + nameplate + '.radius', taperRadius, **kwargs) 
     
     """
@@ -307,7 +307,7 @@ def adjustRadiusPlate(sliderRadiusPlate, sliderNumPlates,sliderNumTaper, *args, 
        print(i)
        nameplate = name + str((plateNumber - (valNumPlates-i))+1)
        print(nameplate)
-       cmds.select(plateName, r=True)
+       #cmds.select(plateName, add=True)
        cmds.setAttr('poly' + nameplate + '.radius', taperRadius, **kwargs) 
 
 def adjustRadiusTaperPlate(sliderRadiusPlate, sliderNumPlates, sliderNumTaper, *args, **kwargs):
@@ -338,7 +338,7 @@ def adjustRadiusTaperPlate(sliderRadiusPlate, sliderNumPlates, sliderNumTaper, *
        nameplate = name + str((plateNumber - (valNumPlates-i))+1)
        print(nameplate)
        print('taper', taperRadius)
-       cmds.select(plateName, r=True)
+       #cmds.select(plateName, add=True)
        cmds.setAttr('poly' + nameplate + '.radius', taperRadius, **kwargs) 
        
 def adjustHeightPlate(sliderHeight, sliderNumPlates, sliderDistance, slidehieghtPlate, *args, **kwargs):
@@ -370,14 +370,14 @@ def adjustHeightPlate(sliderHeight, sliderNumPlates, sliderDistance, slidehieght
        print(i)
        nameplate = name + str((plateNumber - (valNumPlates-i))+1)
        print(nameplate)
-       cmds.select(plateName, r=True)
+       #cmds.select(plateName, add=True)
        cmds.setAttr('poly' + nameplate + '.height', valHeightPlates, **kwargs) 
        cmds.move(0,valHeight+2*i+(valHeightPlates/2.0) +(valDistance*i),0,nameplate)
     
     poleNumber = int(numberObject('pole'))
     poleName = nameObject('pole')
     heightPole = valHeight+2*(valNumPlates-1)+(valHeightPlates/2.0)+(valDistance*(valNumPlates-1))
-    cmds.select(poleName, r=True)
+    #cmds.select(poleName, add=True)
     cmds.setAttr('polypole' + str(poleNumber) + '.height', heightPole, **kwargs) 
     cmds.move(0,heightPole/2,0, poleName)
     
@@ -450,6 +450,7 @@ cmds.showWindow()
 
 def cakestand():
     cakestand = cmds.group(empty=True, name='cakeStand#')
+    #cmds.select(nameGroup('cakeStand'),add=True)
     height = cmds.floatSliderGrp(HeightSlider, q=True, value=True) 
     distance = cmds.floatSliderGrp(DistanceSlider, q=True, value=True) 
     base()
@@ -477,8 +478,10 @@ def plates():
         plateName = nameObject(name)
         cmds.move(0,valHeight+(height/2.0),0,plateName)
         newname = 'poly'+ plateName
+        #cmds.select(plateName, add=True)
         cmds.rename('polyCylinder1', newname)
         cmds.parent(plateName, nameGroup('cakeStand'))
+        cmds.select(nameGroup('cakeStand'),add=True)
     plateNumber = int(numberObject(name))
     differenceNumPlates = numPlate - plateNumber
     if (differenceNumPlates<0):
@@ -494,13 +497,14 @@ def plates():
             taperRadius = radius - (radiusTaper*(float(i)/float(numPlate))*radius)
             plateCyl = quadCylinder(name, taperRadius, height, subax, subheight, subcap)
             plateName = nameObject(name)
-            cmds.select(plateName, r=False)
+            #cmds.select(plateName, add=True)
             #plateName = name + str((plateNumber - (numPlate-i))+1)
             cmds.move(0,valHeight+2*i+(height/2) +(valDistance*i),0,plateName)
             
             newname = 'poly'+ plateName
             cmds.rename('polyCylinder1', newname)
             cmds.parent(plateName, nameGroup('cakeStand'))
+            cmds.select(nameGroup('cakeStand'),add=True)
     """
     numPlate = cmds.intSliderGrp(NumPlateSlider, q=True, value=True) 
     radius= 7
@@ -536,11 +540,12 @@ def base():
     baseCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
     baseName = nameObject(name)
     baseNum = numberObject(name)
-    cmds.select(baseName, r=False)
+    #cmds.select(baseName, add=True)
     newname = 'poly'+ baseName
     cmds.rename('polyCylinder1', newname)
     cmds.move(0,height/2,0,baseName)
     cmds.parent(baseName, nameGroup('cakeStand'))
+    cmds.select(nameGroup('cakeStand'),add=True)
     
 
 
@@ -557,11 +562,12 @@ def pole():
     name = 'pole'
     baseCyl = quadCylinder(name, radius, heightPole, subax, subheight, subcap)
     baseName = nameObject(name)
-    cmds.select(baseName, r=False)
+   # cmds.select(baseName, add=True)
     newname = 'poly'+ baseName
     cmds.rename('polyCylinder1', newname)
     cmds.move(0,heightPole/2,0,baseName)
     cmds.parent(baseName, nameGroup('cakeStand'))
+    cmds.select(nameGroup('cakeStand'),add=True)
 
 def quadCylinder(name, radius, height, subax, subheight, subcap):
     #quaded cylinders can only have an even subdivision axis number, so this ensures that it will only be set to an even number
