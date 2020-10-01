@@ -395,6 +395,20 @@ def numberObject(name):
     return quadcylinderNumber
     
 
+def nameGroup(name):
+    nameStar = name+'*'
+    quadcylinderls = cmds.ls(nameStar, long=True)
+    quadcylinderNumber= str(len(quadcylinderls))
+    quadcylinderName = name + quadcylinderNumber
+    return quadcylinderName
+ 
+def numberGroup(name):
+    nameStar = name+'*'
+    quadcylinderls = cmds.ls(nameStar, long=True)
+    quadcylinderNumber= str(len(quadcylinderls))
+    return quadcylinderNumber
+    
+
 HeightSlider = cmds.floatSliderGrp(label='Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
 HeightPlateSlider = cmds.floatSliderGrp(label='Height Plate', columnAlign= (1,'right'), field=True, min=0.5, max=4, value=0, step=0.1, dc = 'empty')
 DistanceSlider = cmds.floatSliderGrp(label='Plate Distance', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
@@ -435,6 +449,7 @@ cmds.separator(h=20)
 cmds.showWindow()
 
 def cakestand():
+    cakestand = cmds.group(empty=True, name='cakeStand#')
     height = cmds.floatSliderGrp(HeightSlider, q=True, value=True) 
     distance = cmds.floatSliderGrp(DistanceSlider, q=True, value=True) 
     base()
@@ -463,6 +478,7 @@ def plates():
         cmds.move(0,valHeight+(height/2.0),0,plateName)
         newname = 'poly'+ plateName
         cmds.rename('polyCylinder1', newname)
+        cmds.parent(plateName, nameGroup('cakeStand'))
     plateNumber = int(numberObject(name))
     differenceNumPlates = numPlate - plateNumber
     if (differenceNumPlates<0):
@@ -484,6 +500,7 @@ def plates():
             
             newname = 'poly'+ plateName
             cmds.rename('polyCylinder1', newname)
+            cmds.parent(plateName, nameGroup('cakeStand'))
     """
     numPlate = cmds.intSliderGrp(NumPlateSlider, q=True, value=True) 
     radius= 7
@@ -518,10 +535,14 @@ def base():
     name = 'base'
     baseCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
     baseName = nameObject(name)
+    baseNum = numberObject(name)
     cmds.select(baseName, r=False)
     newname = 'poly'+ baseName
     cmds.rename('polyCylinder1', newname)
     cmds.move(0,height/2,0,baseName)
+    cmds.parent(baseName, nameGroup('cakeStand'))
+    
+
 
 def pole():
     radius= cmds.floatSliderGrp(RadiusPoleSlider, q=True, value=True)
@@ -540,6 +561,7 @@ def pole():
     newname = 'poly'+ baseName
     cmds.rename('polyCylinder1', newname)
     cmds.move(0,heightPole/2,0,baseName)
+    cmds.parent(baseName, nameGroup('cakeStand'))
 
 def quadCylinder(name, radius, height, subax, subheight, subcap):
     #quaded cylinders can only have an even subdivision axis number, so this ensures that it will only be set to an even number
