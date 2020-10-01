@@ -88,6 +88,7 @@ def adjustSubH(sliderSubH, sliderNumPlates, *args, **kwargs):
     quadcylinderName = nameObject('base')
     cmds.delete(quadcylinderName)
     base()
+    
     poleName = nameObject('pole')
     cmds.delete(poleName)
     pole()
@@ -115,10 +116,12 @@ def adjustCap(sliderCap,sliderNumPlates, *args, **kwargs):
     """
     quadcylinderName = nameObject('base')
     cmds.delete(quadcylinderName)
-    base()     
+    base()
+         
     poleName = nameObject('pole')
     cmds.delete(poleName)
     pole()
+    
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
     numBase = int(numberObject('base'))
     extraP = ''
@@ -143,9 +146,11 @@ def adjustSubAx(sliderSubAx,sliderNumPlates, *args, **kwargs):
     quadcylinderName = nameObject('base')
     cmds.delete(quadcylinderName)
     base() 
+    
     poleName = nameObject('pole')
     cmds.delete(poleName)
     pole()
+    
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
     numBase = int(numberObject('base'))
     extraP = ''
@@ -473,6 +478,7 @@ def plates():
             taperRadius = radius - (radiusTaper*(float(i)/float(numPlate))*radius)
             plateCyl = quadCylinder(name, taperRadius, height, subax, subheight, subcap)
             plateName = nameObject(name)
+            cmds.select(plateName, r=False)
             #plateName = name + str((plateNumber - (numPlate-i))+1)
             cmds.move(0,valHeight+2*i+(height/2) +(valDistance*i),0,plateName)
             
@@ -512,6 +518,7 @@ def base():
     name = 'base'
     baseCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
     baseName = nameObject(name)
+    cmds.select(baseName, r=False)
     newname = 'poly'+ baseName
     cmds.rename('polyCylinder1', newname)
     cmds.move(0,height/2,0,baseName)
@@ -529,6 +536,7 @@ def pole():
     name = 'pole'
     baseCyl = quadCylinder(name, radius, heightPole, subax, subheight, subcap)
     baseName = nameObject(name)
+    cmds.select(baseName, r=False)
     newname = 'poly'+ baseName
     cmds.rename('polyCylinder1', newname)
     cmds.move(0,heightPole/2,0,baseName)
