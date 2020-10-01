@@ -155,6 +155,8 @@ def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, *args, **kwar
     valHeight = cmds.floatSliderGrp(sliderHeight, q=True, value=True)
     valDistance = cmds.floatSliderGrp(sliderDistance, q=True, value=True)
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
+    #valRadius = cmds.intSliderGrp(slideRadius, q=True, value=True)
+    
     plates(valHeight, valDistance) 
     print('HEIGHT', valHeight)
     print('DIST', valDistance)
@@ -165,6 +167,7 @@ def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, *args, **kwar
     heightPole = valHeight+2*(valNumPlates-1)+0.5+(valDistance*(valNumPlates-1))
     cmds.setAttr('polypole' + str(poleNumber) + '.height', heightPole, **kwargs) 
     cmds.move(0,heightPole/2,0, poleName)
+    
     """
     radius= 7
     height = 1
@@ -204,8 +207,34 @@ def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, *args, **kwar
        # cmds.move(0,heightBase+2*i+0.5+(distance*i),0,plateName)
         
        # newname = 'poly'+ plateName
-       # cmds.rename('polyCylinder1', newname)
-      
+      # cmds.rename('polyCylinder1', newname)
+
+def adjustRadiusPlate(sliderRadiusPlate, sliderNumPlates, *args, **kwargs):
+    """
+    sliderHeight: floatSliderGrp object holding the cylinder height value
+        
+    Adjusts the cylinder height based on the slider value
+    """
+  # valHeight = cmds.floatSliderGrp(sliderHeight, q=True, value=True)
+    #alDistance = cmds.floatSliderGrp(sliderDistance, q=True, value=True)
+    valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
+    valRadius = cmds.floatSliderGrp(sliderRadiusPlate, q=True, value=True)
+    
+    numBase = int(numberObject('base'))
+    extraP = ''
+    for i in range(0,numBase):
+        extraP+= 'p'
+    name = extraP + 'lates'
+    
+    plateName = nameObject(name)
+    plateNumber = int(numberObject(name))
+    for i in range(0, valNumPlates):
+       print(i)
+       nameplate = name + str((plateNumber - (valNumPlates-i))+1)
+       print(nameplate)
+       cmds.select(plateName, r=True)
+       cmds.setAttr('poly' + nameplate + '.radius', valRadius, **kwargs) 
+    
 def nameObject(name):
     nameStar = name+'*'
     quadcylinderls = cmds.ls(nameStar, long=True)
@@ -223,17 +252,19 @@ def numberObject(name):
 HeightSlider = cmds.floatSliderGrp(label='Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
 DistanceSlider = cmds.floatSliderGrp(label='Plate Distance', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
 NumPlateSlider = cmds.intSliderGrp(label='Number Plates', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
-cmds.intSliderGrp(NumPlateSlider, e=True, dc = partial(adjustNumPlates, NumPlateSlider, DistanceSlider, HeightSlider))
+cmds.intSliderGrp(NumPlateSlider, e=True, dc = partial(adjustNumPlates, NumPlateSlider, DistanceSlider, HeightSlider ))
 
 cmds.floatSliderGrp(HeightSlider, e=True, dc = partial(adjustHeight, HeightSlider, NumPlateSlider, DistanceSlider))
 
-
+RadiusPlateSlider = cmds.floatSliderGrp(label='Radius Plate', columnAlign= (1,'right'), field=True, min=5, max=20, value=0, step=0.1, dc = 'empty')
+cmds.floatSliderGrp(RadiusPlateSlider, e=True, dc = partial(adjustRadiusPlate, RadiusPlateSlider, NumPlateSlider))
 
 RadiusSlider = cmds.floatSliderGrp(label='Radius Base', columnAlign= (1,'right'), field=True, min=5, max=20, value=0, step=0.1, dc = 'empty')
 cmds.floatSliderGrp(RadiusSlider,  e=True, dc = partial(adjustRadiusBase, RadiusSlider, NumPlateSlider))
 
 RadiusPoleSlider = cmds.floatSliderGrp(label='Radius Pole', columnAlign= (1,'right'), field=True, min=1, max=8, value=0, step=0.1, dc = 'empty')
 cmds.floatSliderGrp(RadiusPoleSlider,  e=True, dc = partial(adjustRadiusPole, RadiusPoleSlider))
+
 
 SubHSlider = cmds.intSliderGrp(label='Subdivision Height', columnAlign= (1,'right'), field=True, min=1, max=20, value=0, step=0.1, dc = 'empty')
 cmds.intSliderGrp(SubHSlider,  e=True, dc = partial(adjustSubH, SubHSlider))
@@ -264,7 +295,7 @@ def plates(heightBase, distance):
     numPlate = cmds.intSliderGrp(NumPlateSlider, q=True, value=True) 
     valDistance = cmds.floatSliderGrp(DistanceSlider, q=True, value=True)
     valHeight = cmds.floatSliderGrp(HeightSlider, q=True, value=True)
-    radius= 7
+    radius= cmds.floatSliderGrp(RadiusPlateSlider, q=True, value=True)
     height = 1
     subax = 5
     subheight = 2
