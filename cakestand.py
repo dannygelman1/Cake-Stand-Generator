@@ -27,16 +27,19 @@ def adjustHeight(sliderHeight, sliderNumPlates, sliderDistance, slidehieghtPlate
     quadcylinderName = nameObject('base')
     quadcylinderNumber = int(numberObject('base'))
     
-    name = namePlate()
-    
-    plateName = nameObject(name)
-    plateNumber = int(numberObject(name))
+    #changing height of base
     cmds.setAttr('polybase' + str(quadcylinderNumber)+ '.height', valHeight, **kwargs) 
     cmds.move(0,valHeight/2,0, quadcylinderName)
+    
+    #moving position of plates
+    name = namePlate()
+    plateName = nameObject(name)
+    plateNumber = int(numberObject(name))
     for i in range(0, valNumPlates):
        nameplate = name + str((plateNumber - (valNumPlates-i))+1)
        cmds.move(0,valHeight+2*i+(valHeightPlates/2.0) +(valDistance*i),0,nameplate)
     
+    #changing height of pole
     poleNumber = int(numberObject('pole'))
     poleName = nameObject('pole')
     heightPole = valHeight+2*(valNumPlates-1)+(valHeightPlates/2.0) +(valDistance*(valNumPlates-1))
@@ -75,14 +78,17 @@ def adjustSubH(sliderSubH, sliderNumPlates, *args, **kwargs):
         
     Adjusts the cylinder subdivision height based on the slider value
     """
+    #subdivsions for base
     quadcylinderName = nameObject('base')
     cmds.delete(quadcylinderName)
     base()
     
+    #subdivsions for pole
     poleName = nameObject('pole')
     cmds.delete(poleName)
     pole()
     
+    #subdivsions for plates
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
     name = namePlate()
     plateName = nameObject(name)
@@ -99,14 +105,17 @@ def adjustCap(sliderCap,sliderNumPlates, *args, **kwargs):
         
     Adjusts the cylinder subdivision cap based on the slider value
     """
+    #subdivsions for base   
     quadcylinderName = nameObject('base')
     cmds.delete(quadcylinderName)
     base()
          
+    #subdivsions for pole    
     poleName = nameObject('pole')
     cmds.delete(poleName)
     pole()
     
+    #subdivsions for plates
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
     name = namePlate()
     plateName = nameObject(name)
@@ -123,14 +132,17 @@ def adjustSubAx(sliderSubAx,sliderNumPlates, *args, **kwargs):
         
     Adjusts the cylinder subdivision axis based on the slider value
     """
+    #subdivsions for base
     quadcylinderName = nameObject('base')
     cmds.delete(quadcylinderName)
     base() 
     
+    #subdivsions for pole
     poleName = nameObject('pole')
     cmds.delete(poleName)
     pole()
     
+    #subdivsions for plates
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
     name = namePlate()
     plateName = nameObject(name)
@@ -142,7 +154,7 @@ def adjustSubAx(sliderSubAx,sliderNumPlates, *args, **kwargs):
     
 def adjustDistance(sliderDistance, sliderNumPlates, sliderHeight, sliderPlateHeight, *args, **kwargs):
     """
-    sliderHeight: floatSliderGrp object holding the cylinder height value
+    sliderHeight: floatSliderGrp object holding the height value
     sliderNumPlates: floatSliderGrp object holding the number of plates value
     sliderHeight: floatSliderGrp object holding the height value
     sliderPlateHeight: floatSliderGrp object holding the plate height value
@@ -154,6 +166,7 @@ def adjustDistance(sliderDistance, sliderNumPlates, sliderHeight, sliderPlateHei
     valNumPlates = cmds.intSliderGrp(sliderNumPlates, q=True, value=True)
     valHeightPlates= cmds.floatSliderGrp(sliderPlateHeight, q=True, value=True)
     
+    #changing positions of plates
     name = namePlate()
     plateName = nameObject(name)
     plateNumber = int(numberObject(name))
@@ -161,6 +174,7 @@ def adjustDistance(sliderDistance, sliderNumPlates, sliderHeight, sliderPlateHei
        nameplate = name + str((plateNumber - (valNumPlates-i))+1)
        cmds.move(0,valHeight+2*i+(valHeightPlates/2.0)+(valDistance*i),0,nameplate)
     
+    #adjusting height of pole
     poleNumber = int(numberObject('pole'))
     poleName = nameObject('pole')
     heightPole = valHeight+2*(valNumPlates-1)+(valHeightPlates/2.0)+(valDistance*(valNumPlates-1))
@@ -186,16 +200,18 @@ def adjustNumPlates(sliderNumPlates, sliderDistance, sliderHeight, sliderRadiusP
     valTaper = cmds.floatSliderGrp(sliderNumTaper, q=True, value=True)
     valHeightPlates= cmds.floatSliderGrp(sliderPlateHeight, q=True, value=True)
     
+    #changing number of plates with this call 
     plates() 
     
+    #changing height of pole
     poleNumber = int(numberObject('pole'))
     poleName = nameObject('pole')
     heightPole = valHeight+2*(valNumPlates-1)+(valHeightPlates/2.0)+(valDistance*(valNumPlates-1))
     cmds.setAttr('polypole' + str(poleNumber) + '.height', heightPole, **kwargs) 
     cmds.move(0,heightPole/2,0, poleName)
     
+    #recomputing radius of plates based on number of plates parameter
     name = namePlate()
-    
     plateName = nameObject(name)
     plateNumber = int(numberObject(name))
     for i in range(0, valNumPlates):
@@ -216,7 +232,7 @@ def adjustRadiusPlate(sliderRadiusPlate, sliderNumPlates,sliderNumTaper, *args, 
     valTaper = cmds.floatSliderGrp(sliderNumTaper, q=True, value=True)
     
     name = namePlate()
-    
+    #recomputing radius of plates based on radius parameter
     plateName = nameObject(name)
     plateNumber = int(numberObject(name))
     for i in range(0, valNumPlates):
@@ -237,7 +253,7 @@ def adjustRadiusTaperPlate(sliderRadiusPlate, sliderNumPlates, sliderNumTaper, *
     valTaper = cmds.floatSliderGrp(sliderNumTaper, q=True, value=True)
     
     name = namePlate()
-    
+    #recomputing radius of plates based on taper parameter
     plateName = nameObject(name)
     plateNumber = int(numberObject(name))
     for i in range(0, valNumPlates):
@@ -263,7 +279,7 @@ def adjustHeightPlate(sliderHeight, sliderNumPlates, sliderDistance, slidehieght
     quadcylinderNumber = int(numberObject('base'))
     
     name = namePlate()
-    
+    #changing hieght of each plate
     plateName = nameObject(name)
     plateNumber = int(numberObject(name))
     for i in range(0, valNumPlates):
@@ -271,6 +287,7 @@ def adjustHeightPlate(sliderHeight, sliderNumPlates, sliderDistance, slidehieght
        cmds.setAttr('poly' + nameplate + '.height', valHeightPlates, **kwargs) 
        cmds.move(0,valHeight+2*i+(valHeightPlates/2.0) +(valDistance*i),0,nameplate)
     
+    #changing height of pole
     poleNumber = int(numberObject('pole'))
     poleName = nameObject('pole')
     heightPole = valHeight+2*(valNumPlates-1)+(valHeightPlates/2.0)+(valDistance*(valNumPlates-1))
@@ -390,6 +407,7 @@ def plates():
    
     name = namePlate()
     plateNumber = int(numberObject(name))
+    #making intial plate if there are no plates in the scene
     if (plateNumber == 0):
         plateCyl = quadCylinder(name, radius, height, subax, subheight, subcap)
         plateName = nameObject(name)
@@ -399,12 +417,15 @@ def plates():
         cmds.parent(plateName, nameGroup('cakeStand'))
         cmds.select(nameGroup('cakeStand'),add=True)
     plateNumber = int(numberObject(name))
+    #calculating difference between current number of plates and target number
     differenceNumPlates = numPlate - plateNumber
+    #startig from the top and deleting the correct number of plates down
     if (differenceNumPlates<0):
         for i in range(0, differenceNumPlates, -1):
             numberPlatetoDelete = plateNumber + i
             namePlatetoDelete = name + str(numberPlatetoDelete)
             cmds.delete(namePlatetoDelete)
+    #starting from the top and adding the correct number of plates up
     if (differenceNumPlates>0):
         for i in range(plateNumber,numPlate):
             taperRadius = radius - (radiusTaper*(float(i)/float(numPlate))*radius)
