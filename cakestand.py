@@ -9,7 +9,6 @@ cmds.separator(h=20)
 cmds.text("Adjust Parameters of the Cake Stand")
 cmds.separator(h=20)
 
-#Stem Funcations
 def adjustHeight(sliderHeight, sliderNumPlates, sliderDistance, slidehieghtPlate, *args, **kwargs):
     """
     sliderHeight: floatSliderGrp object holding the base height value
